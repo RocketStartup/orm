@@ -1,12 +1,12 @@
 {
-    "name": "RocketStartup/orm",
+    "name": "rocket-startup/orm",
     "type": "library",
     "license": "MIT",
     "minimum-stability": "dev",
     "prefer-stable": true,
     "support": {
-        "issues": "https://github.com/RocketStartup/orm/issues",
-        "source": "https://github.com/RocketStartup/orm/"
+        "issues": "https://github.com/rocket-startup/orm/issues",
+        "source": "https://github.com/rocket-startup/orm/"
     },
     "config": {
         "sort-packages": true
