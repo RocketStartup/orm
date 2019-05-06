@@ -1,0 +1,25 @@
+{
+    "name": "RocketStartup/orm",
+    "type": "library",
+    "license": "MIT",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "support": {
+        "issues": "https://github.com/RocketStartup/orm/issues",
+        "source": "https://github.com/RocketStartup/orm/"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "require": {
+       
+    },
+    "autoload": {
+        "psr-4": {
+            "RocketStartup\\Orm\\": [
+                "src/",
+                "tests/"
+            ]
+        }
+    }
+}
