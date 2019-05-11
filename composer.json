@@ -1,12 +1,11 @@
 {
-    "name": "rocket-startup/orm",
+    "name": "astronphp/orm",
     "type": "library",
     "license": "MIT",
     "minimum-stability": "dev",
-    "prefer-stable": true,
     "support": {
-        "issues": "https://github.com/rocket-startup/orm/issues",
-        "source": "https://github.com/rocket-startup/orm/"
+        "issues": "https://github.com/astronphp/orm/issues",
+        "source": "https://github.com/astronphp/orm/"
     },
     "config": {
         "sort-packages": true
@@ -16,7 +15,7 @@
     },
     "autoload": {
         "psr-4": {
-            "RocketStartup\\Orm\\": [
+            "Astronphp\\Orm\\": [
                 "src/",
                 "tests/"
             ]

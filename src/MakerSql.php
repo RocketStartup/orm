@@ -1,7 +1,7 @@
 <?php
 
-namespace RocketStartup\Orm;
-use RocketStartup\Orm\ConnectPDO;
+namespace Astronphp\Orm;
+use Astronphp\Orm\ConnectPDO;
 
 /*
 	OBS: Ao definir o setTable, todos os valores setados na última consulta serão limpos.

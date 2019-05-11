@@ -1,7 +1,7 @@
 <?php
 
-namespace RocketStartup\Orm;
-use RocketStartup\Orm\MakerSql;
+namespace Astronphp\Orm;
+use Astronphp\Orm\MakerSql;
 
 class ConnectPDO extends \PDO{
     private $dns            = '';
