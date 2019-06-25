@@ -1,22 +1,14 @@
 <?php
 
 	define('PATH_ROOT', explode('vendor/astronphp', __DIR__)[0]);
+	
+	// bootstrap.php
 	require_once PATH_ROOT."vendor/autoload.php";
-	$dir = PATH_ROOT."library/entity/";
 
-	// o Doctrine utiliza namespaces em sua estrutura, por isto estes uses
 	use Doctrine\ORM\Tools\Setup;
 	use Doctrine\ORM\EntityManager;
 
-	//onde irão ficar as entidades do projeto? Defina o caminho aqui
-	$isDevMode = true;
-
-	$dbParams = array(
-	    'driver'   => 'pdo_mysql',
-	    'user'     => 'vagrant',
-	    'password' => 'vagrant',
-	    'dbname'   => 'orm',
-	);
+	require_once "db-config.php";
 
 	if (is_dir($dir)) {
 	    $iterator = new \FilesystemIterator($dir);
@@ -48,55 +40,51 @@
 	$generator->setNumSpaces(5);
 	$generator->generate($metadata, $dir);
 
-		$assignature="<?php\nnamespace Library\Entity;\n";
+	$assignature="<?php\nnamespace Library\Entity;\n";
 
-		$addClass="}\n\n 	public function getNameTable()\n	{ \n 		return '@NameTable';\n	} \n}";
+	$addClass="}\n\n 	public function getNameTable()\n	{ \n 		return '@NameTable';\n	} \n}";
 
-		$procurar = array("@ORM\\","private",")\n    {","\n{","<?php\n\n\n\n","}\n}");
-		$colocar = array("@","protected","){","{",$assignature,$addClass);
+	$procurar = array("@ORM\\","private",")\n    {","\n{","<?php\n\n\n\n","}\n}");
+	$colocar = array("@","protected","){","{",$assignature,$addClass);
 
-	    $types = array('php');
-		$path = new DirectoryIterator($dir);
+	$types = array('php');
+	$path = new DirectoryIterator($dir);
 
-		$contador=0;
-		foreach ($path as $fileInfo) {
-		    $ext = strtolower( $fileInfo->getExtension() );
-		    if( in_array( $ext, $types ) ){
-
-	    	$arquivo = $dir.$fileInfo->getFilename();
-
-	    	if(($fp = fopen($arquivo, "r"))) {
-		    	$ponteiro = fopen ($arquivo,"r");
+	$contador=0;
+	foreach ($path as $fileInfo) {
+		$ext = strtolower( $fileInfo->getExtension() );
+		if( in_array( $ext, $types ) ){
+			$arquivo = $dir.$fileInfo->getFilename();
+			if(($fp = fopen($arquivo, "r"))) {
+				$ponteiro = fopen ($arquivo,"r");
 
 				//LÊ O ARQUIVO ATÉ CHEGAR AO FIM
 				while (!feof ($ponteiro)) {
-				  $linha = fgets($ponteiro,4096);
-				  $tmpLine=$linha;
+					$linha = fgets($ponteiro,4096);
+					$tmpLine=$linha;
 
-				  if(strpos($tmpLine,'(\\')!==false){
-				  	$tmp = explode("(",$tmpLine);
-				  	$tmp = explode("$",$tmp[1]);
+					if(strpos($tmpLine,'(\\')!==false){
+						$tmp = explode("(",$tmpLine);
+						$tmp = explode("$",$tmp[1]);
 
-				  	if($n=array_search($tmp[0],$procurar)){
-				  		$procurar[$n] = $tmp[0];
-				  		$colocar[$n] = "";
-				  	}else{
-					  	$procurar[] = $tmp[0];
-					  	$colocar[] = "";
+						if($n=array_search($tmp[0],$procurar)){
+							$procurar[$n] = $tmp[0];
+							$colocar[$n] = "";
+						}else{
+							$procurar[] = $tmp[0];
+							$colocar[] = "";
+						}
 					}
-
-				  }
-				  if(strpos($tmpLine,'* @ORM\Table(name="')!==false){
-				  	$nametable = explode('"', $tmpLine);
-				  	if($p=array_search('@NameTable',$procurar)){
-				  		$procurar[$p] = '@NameTable';
-				  		$colocar[$p] = $nametable[1];
-				  	}else{
-					  	$procurar[] = '@NameTable';
-					  	$colocar[] = $nametable[1];
+					if(strpos($tmpLine,'* @ORM\Table(name="')!==false){
+						$nametable = explode('"', $tmpLine);
+						if($p=array_search('@NameTable',$procurar)){
+							$procurar[$p] = '@NameTable';
+							$colocar[$p] = $nametable[1];
+						}else{
+							$procurar[] = '@NameTable';
+							$colocar[] = $nametable[1];
+						}
 					}
-				  }
-
 				}
 			}
 			//Obtem o conteudo do arquivo
@@ -109,7 +97,7 @@
 			fclose($gravar);
 			$contador++;
 
-	    }
+		}
 	}
 	if($contador>0){
 		echo "\e[0;30;42mGenerated ".($contador)." new classes in '".$dir."'\e[0m\n";
