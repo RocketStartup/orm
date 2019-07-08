@@ -40,7 +40,7 @@
 	$generator->setNumSpaces(5);
 	$generator->generate($metadata, $dir);
 
-	$assignature="<?php\nnamespace Library\Entity;\n";
+	$assignature="<?php\nnamespace Entity;\n";
 
 	$addClass="}\n\n 	public function getNameTable()\n	{ \n 		return '@NameTable';\n	} \n}";
 
