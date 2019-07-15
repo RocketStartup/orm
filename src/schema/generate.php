@@ -42,7 +42,7 @@
 
 	$assignature="<?php\nnamespace Entity;\n";
 
-	$addClass="}\n\n 	public function getNameTable()\n	{ \n 		return '@NameTable';\n	} \n}";
+	$addClass="}\n\n 	protected ".'$dbTableName'." = '@NameTable';\n\n}";
 
 	$procurar = array("@ORM\\","private",")\n    {","\n{","<?php\n\n\n\n","}\n}");
 	$colocar = array("@","protected","){","{",$assignature,$addClass);
@@ -90,6 +90,11 @@
 			//Obtem o conteudo do arquivo
 			$obter = file_get_contents($arquivo);
 			$novo = str_replace($procurar, $colocar, $obter);
+
+			$namClass=str_replace(".php", "", $fileInfo->getFilename());
+			if(strpos($novo,$namClass)!==false){
+				$novo = str_replace($namClass."{", $namClass." extends \Repository\AbstractObject{", $novo);
+			}
 
 			//Grava o novo texto (modificado) no arquivo
 			$gravar = fopen($arquivo, "w");

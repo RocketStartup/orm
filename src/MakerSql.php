@@ -151,7 +151,7 @@ class MakerSql extends ConnectPDO{
         $insert=$this->executeSQL($q);
         //armazena ultimo id inserido no banco
         if($this->getLastError()==''){
-            $inserted=$GLOBALS['CONN']->Insert_ID();
+            $inserted=\PDO::lastInsertId();
             $this->setInsertId($inserted);
         }
 
