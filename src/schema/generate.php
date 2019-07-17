@@ -44,7 +44,7 @@
 	$namespace = 'Entity\\'.$namespace[count($namespace)-2];
 	$assignature="<?php\nnamespace $namespace;\n";
 
-	$addClass="}\n\n 	protected ".'$dbTableName'." = '@NameTable';\n\n}";
+	$addClass="}\n\n 	public ".'$dbTableName'." = '@NameTable';\n\n}";
 
 	$procurar = array("@ORM\\","private",")\n    {","\n{","<?php\n\n\n\n","}\n}");
 	$colocar = array("@","protected","){","{",$assignature,$addClass);
