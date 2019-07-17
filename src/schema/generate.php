@@ -40,7 +40,9 @@
 	$generator->setNumSpaces(5);
 	$generator->generate($metadata, $dir);
 
-	$assignature="<?php\nnamespace Entity;\n";
+	$namespace = explode('/', $dir);
+	$namespace = 'Entity\\'.ucfirst($namespace[count($namespace)-2]);
+	$assignature="<?php\nnamespace $namespace;\n";
 
 	$addClass="}\n\n 	protected ".'$dbTableName'." = '@NameTable';\n\n}";
 
@@ -93,7 +95,7 @@
 
 			$namClass=str_replace(".php", "", $fileInfo->getFilename());
 			if(strpos($novo,$namClass)!==false){
-				$novo = str_replace($namClass."{", $namClass." extends \Repository\AbstractObject{", $novo);
+				$novo = str_replace($namClass."{", $namClass." extends \Repository\AbstractEntity{", $novo);
 			}
 
 			//Grava o novo texto (modificado) no arquivo

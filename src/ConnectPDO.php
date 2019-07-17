@@ -51,6 +51,7 @@ class ConnectPDO extends \PDO{
         $this->dns .= ':host='.$this->host;
         $this->dns .= ((!empty($this->port)) ? (';port=' . $this->port) : '');
         $this->dns .= ';dbname=' . $this->database;
+        $this->dns .= ';charset=utf8';
     }
 
     public function __set($name,$value){
