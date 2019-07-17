@@ -41,7 +41,7 @@
 	$generator->generate($metadata, $dir);
 
 	$namespace = explode('/', $dir);
-	$namespace = 'Entity\\'.ucfirst($namespace[count($namespace)-2]);
+	$namespace = 'Entity\\'.$namespace[count($namespace)-2];
 	$assignature="<?php\nnamespace $namespace;\n";
 
 	$addClass="}\n\n 	protected ".'$dbTableName'." = '@NameTable';\n\n}";

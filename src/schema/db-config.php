@@ -3,7 +3,7 @@
 $astronjson = file_get_contents(PATH_ROOT.'tmp/database/app.json');
 $astronjson = json_decode($astronjson, true);
 
-$dir = PATH_ROOT.'src/entity/'.$astronjson['app'].'/';
+$dir = PATH_ROOT.'src/entity/'.ucfirst($astronjson['app']).'/';
 $isDevMode = false;
 
 // the connection configuration
