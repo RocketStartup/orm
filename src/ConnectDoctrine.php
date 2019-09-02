@@ -53,7 +53,7 @@ class ConnectDoctrine{
                 array($this->dirEntity),
                 $this->isDevMode
             );
-            $config->addEntityNamespace($this->entityNamespace, 'Entity\''.$this->entityNamespace);
+            $config->addEntityNamespace($this->entityNamespace, 'Entity\\'.$this->entityNamespace);
             // the connection configuration
             return EntityManager::create(
                     array(
