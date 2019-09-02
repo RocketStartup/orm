@@ -1,9 +1,8 @@
 <?php
 
-	define('PATH_ROOT', explode('vendor/astronphp', __DIR__)[0]);
-	
+	define('PATH_ROOT', explode('vendor/astronphp', str_replace('\\','/',__DIR__))[0]);
 	// bootstrap.php
-	require_once PATH_ROOT."vendor/autoload.php";
+	require_once PATH_ROOT."/vendor/autoload.php";
 
 	use Doctrine\ORM\Tools\Setup;
 	use Doctrine\ORM\EntityManager;
