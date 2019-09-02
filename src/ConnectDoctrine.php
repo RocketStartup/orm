@@ -14,11 +14,13 @@ class ConnectDoctrine{
     // 3006
     private $port           = '3306';
     // databasenome
-    private $database         = '';
+    private $database       = '';
     // root
     private $username       = '';
     // 123456
     private $password       = '';
+    // utf8
+    private $charset        = 'utf8';
     // true | false
     private $isDevMode      = false;
     // true | false
@@ -26,15 +28,16 @@ class ConnectDoctrine{
 
     public function __construct($autoConnect=true){
 
-        $this->engine           =  \Orm::getInstance('Orm')->engine     ??  $this->engine;
-        $this->host             =  \Orm::getInstance('Orm')->host       ??  $this->host;
-        $this->port             =  \Orm::getInstance('Orm')->port       ??  $this->port;
-        $this->database         =  \Orm::getInstance('Orm')->database   ??  $this->database;
-        $this->username         =  \Orm::getInstance('Orm')->username   ??  $this->username;
-        $this->password         =  \Orm::getInstance('Orm')->password   ??  $this->password;
-        $this->dirEntity        =  \Orm::getInstance('Orm')->dirEntity   ?? null;
-        $this->isDevMode        =  \Orm::getInstance('Orm')->isDevMode   ?? false;
-        $this->entityNamespace  =  \Orm::getInstance('Orm')->entityNamespace   ?? null;
+        $this->engine           =  \Orm::getInstance('Orm')->engine             ??  $this->engine;
+        $this->host             =  \Orm::getInstance('Orm')->host               ??  $this->host;
+        $this->port             =  \Orm::getInstance('Orm')->port               ??  $this->port;
+        $this->database         =  \Orm::getInstance('Orm')->database           ??  $this->database;
+        $this->username         =  \Orm::getInstance('Orm')->username           ??  $this->username;
+        $this->password         =  \Orm::getInstance('Orm')->password           ??  $this->password;
+        $this->charset          =  \Orm::getInstance('Orm')->charset            ??  $this->charset;
+        $this->dirEntity        =  \Orm::getInstance('Orm')->dirEntity          ?? null;
+        $this->isDevMode        =  \Orm::getInstance('Orm')->isDevMode          ?? false;
+        $this->entityNamespace  =  \Orm::getInstance('Orm')->entityNamespace    ?? null;
 
         $this->connect          = $this->startConnect();
     }
@@ -57,12 +60,16 @@ class ConnectDoctrine{
             // the connection configuration
             return EntityManager::create(
                     array(
-                        'driver'   => $this->engine,
-                        'host'     => $this->host,
-                        'port'     => $this->port,
-                        'user'     => $this->username,
-                        'password' => $this->password,
-                        'dbname'   => $this->database
+                        'driver'        => $this->engine,
+                        'host'          => $this->host,
+                        'port'          => $this->port,
+                        'user'          => $this->username,
+                        'password'      => $this->password,
+                        'dbname'        => $this->database,
+                        'charset'       => $this->charset,
+                        'driverOptions' => array(
+                           1002   => 'SET NAMES '.$this->charset
+                        )
                     ),
                     $config
                 );
