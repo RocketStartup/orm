@@ -34,13 +34,12 @@ class ConnectDoctrine{
         $this->password         =  \Orm::getInstance('Orm')->password   ??  $this->password;
         $this->dirEntity        =  \Orm::getInstance('Orm')->dirEntity   ?? null;
         $this->isDevMode        =  \Orm::getInstance('Orm')->isDevMode   ?? false;
+        $this->entityNamespace  =  \Orm::getInstance('Orm')->entityNamespace   ?? null;
 
-        $this->connect          = $this->connect();
-        
-        return $this->connect;
+        $this->connect          = $this->startConnect();
     }
 
-    public function connect(){
+    public function startConnect(){
         if(
             !empty($this->engine) &&
             !empty($this->host) &&
@@ -50,6 +49,11 @@ class ConnectDoctrine{
             !empty($this->password) &&
             file_exists($this->dirEntity)
         ){
+            $config = Setup::createAnnotationMetadataConfiguration(
+                array($this->dirEntity),
+                $this->isDevMode
+            );
+            $config->addEntityNamespace($this->entityNamespace, 'Entity\''.$this->entityNamespace);
             // the connection configuration
             return EntityManager::create(
                     array(
@@ -60,13 +64,14 @@ class ConnectDoctrine{
                         'password' => $this->password,
                         'dbname'   => $this->database
                     ),
-                    Setup::createAnnotationMetadataConfiguration(
-                        array($this->dirEntity),
-                        $this->isDevMode
-                    )
+                    $config
                 );
         }else{
             return null;
         }
+    }
+
+    public function connect() {
+        return $this->connect;
     }
 }
