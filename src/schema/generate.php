@@ -5,16 +5,7 @@
 	use Doctrine\ORM\Tools\Setup;
 	use Doctrine\ORM\EntityManager;
 	require_once "db-config.php";
-	if (is_dir($dir)) {
-	    $iterator = new \FilesystemIterator($dir);
-	    if ($iterator->valid()) {
-	        $di = new RecursiveDirectoryIterator($dir, FilesystemIterator::SKIP_DOTS);
-	        $ri = new RecursiveIteratorIterator($di, RecursiveIteratorIterator::CHILD_FIRST);
-	        foreach ( $ri as $file ) {
-	            $file->isDir() ?  rmdir($file) : unlink($file);
-	        }
-	    }
-	}
+	
 	//setando as configurações definidas anteriormente
 	$config = Setup::createAnnotationMetadataConfiguration(array($dir), $isDevMode);
 	//criando o Entity Manager com base nas configurações de dev e banco de dados
@@ -28,9 +19,11 @@
 	$cmf->setEntityManager($em);
 	$metadata = $cmf->getAllMetadata();
 	$generator = new \Doctrine\ORM\Tools\EntityGenerator();
-	$generator->setUpdateEntityIfExists(true);
-	$generator->setGenerateStubMethods(true);
 	$generator->setGenerateAnnotations(true);
+	$generator->setGenerateStubMethods(true);
+	$generator->setRegenerateEntityIfExists(false);
+	$generator->setUpdateEntityIfExists(false);
+	$generator->setBackupExisting(false);
 	$generator->setNumSpaces(5);
 	$generator->generate($metadata, $dir);
 	$namespace = explode('/', $dir);
