@@ -8,9 +8,10 @@ $isDevMode = false;
 
 // the connection configuration
 $dbParams = array(
-    'driver'   => 'pdo_mysql',
+    'driver'   => $astronjson['database']['engine'] ?? 'pdo_mysql',
     'host'     => $astronjson['database']['host'],
     'user'     => $astronjson['database']['username'],
     'password' => $astronjson['database']['password'],
-    'dbname'   => $astronjson['database']['database']
+    'dbname'   => $astronjson['database']['dbname'],
+    'port'     => $astronjson['database']['port'] ?? 3306
 );

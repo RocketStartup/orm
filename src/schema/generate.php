@@ -10,6 +10,11 @@
 	$config = Setup::createAnnotationMetadataConfiguration(array($dir), $isDevMode);
 	//criando o Entity Manager com base nas configurações de dev e banco de dados
 	$em = EntityManager::create($dbParams, $config);
+	try {
+		$em->getConnection()->connect();
+	} catch (\Exception $e) {
+		echo 'Not connected Database '.$dbParams['host'].':'.$dbParams['port'].'.'.$dbParams['dbname'].PHP_EOL; exit;
+	}
 	$em->getConfiguration()->setMetadataDriverImpl(
 	    new \Doctrine\ORM\Mapping\Driver\DatabaseDriver(
 	        $em->getConnection()->getSchemaManager()
