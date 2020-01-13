@@ -54,7 +54,10 @@ class ConnectDoctrine{
         ){
             $config = Setup::createAnnotationMetadataConfiguration(
                 array($this->dirEntity),
-                $this->isDevMode
+                $this->isDevMode,
+                $proxyDir = null,
+                $cache = null,
+                $useSimpleAnnotationReader = false
             );
             $config->addEntityNamespace($this->entityNamespace, 'Entity\\'.$this->entityNamespace);
             // the connection configuration

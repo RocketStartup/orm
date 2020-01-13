@@ -7,7 +7,13 @@ use Doctrine\ORM\EntityManager;
 
 require_once "db-config.php";
 
-$config = Setup::createAnnotationMetadataConfiguration(array($dir), $isDevMode);
+$config = Setup::createAnnotationMetadataConfiguration(
+    array($dir),
+    $isDevMode,
+    $proxyDir = null,
+    $cache = null,
+    $useSimpleAnnotationReader = false
+);
 $entityManager = EntityManager::create($dbParams, $config);
 
 try {
