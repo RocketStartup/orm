@@ -35,8 +35,8 @@
 	$namespace = 'Entity\\'.$namespace[count($namespace)-2];
 	$assignature="<?php\nnamespace $namespace;\n";
 	$addClass="}\n\n}";
-	$procurar = array("@ORM\\","private",")\n    {","\n{","<?php\n\n\n\n","}\n}");
-	$colocar = array("@","protected","){","{",$assignature,$addClass);
+	$procurar = array("private",")\n    {","\n{","<?php\n\n\n\n","}\n}");
+	$colocar = array("protected","){","{",$assignature,$addClass);
 	$types = array('php');
 	$path = new DirectoryIterator($dir);
 	$contador=0;
@@ -78,7 +78,7 @@
 			$novo = str_replace($procurar, $colocar, $obter);
 			$namClass=str_replace(".php", "", $fileInfo->getFilename());
 			if(strpos($novo,$namClass)!==false){
-				$novo = str_replace($namClass."{", $namClass." extends \Repository\AbstractEntity{", $novo);
+				$novo = str_replace($namClass."{", $namClass." extends \Entity\AbstractEntity{", $novo);
 			}
 			//Grava o novo texto (modificado) no arquivo
 			$gravar = fopen($arquivo, "w");
